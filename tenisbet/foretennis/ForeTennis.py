@@ -66,8 +66,8 @@ class ForeTennis:
             except AttributeError:
                 continue
 
-            data = {"match_id": match_id, "match_round": match_round, "match_Date": match_date,
-                    "player1": p1, "player2": p2, "tip": tip, "match_url": match_url}
+            data = {"tournament_id": "", "match_id": match_id, "match_round": match_round, "match_Date": match_date,
+                    "player1": p1, "player2": p2, "tip": tip, "match_url": match_url, "match_result": ""}
             self.matches.append(data)
 
         if len(self.matches) > 0:

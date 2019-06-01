@@ -11,11 +11,25 @@ class TournamentModel:
         self.tournaments.insert_many(tournaments)
 
     def upcoming_tournaments(self):
+        data = []
         current_date = date.today().isoformat()
         after_date = (date.today()+timedelta(days=15)).isoformat()
 
-        query = {"start_date": {"$gte": current_date, "$lte": after_date}}
-        r = self.tournaments.find(query)
+        query = [{"$match": {"$or": [{"start_date": {"$gte": current_date, "$lte": after_date}}]}},
+                 {"$addFields": {"_id": {"$toString": "$_id"}}}]
+
+        r = self.tournaments.aggregate(pipeline=query)
 
         for x in r:
-            print(x)
+            data.append(x)
+        return data
+
+    def get_tournaments_by_type(self, type):
+        data = []
+        query = {"category": type}
+        r = self.tournaments.find(query, {"_id": 0, "category": 0, "link": 0})
+
+        for x in r:
+            data.append(x)
+
+        return data
