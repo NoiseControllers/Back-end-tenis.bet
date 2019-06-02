@@ -1,7 +1,13 @@
 from flask_restful import Resource
 from tenisbet.db.Model.TournamentModel import TournamentModel
-
+from bson.json_util import dumps
 tournament_model = TournamentModel()
+
+
+class Tournaments(Resource):
+    def get(self):
+        r = tournament_model.get_tournaments_with_match()
+        return dumps(r)
 
 
 class TournamentsNext(Resource):

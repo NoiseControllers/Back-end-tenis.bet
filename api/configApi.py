@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_restful import Api
-from api.v1.tournament.Tournaments import TournamentsNext, TournamentsAtp, TournamentsWta
+from api.v1.tournament.Tournaments import TournamentsNext, TournamentsAtp, TournamentsWta, Tournaments
 
 
 class ConfigApi(object):
@@ -8,6 +8,7 @@ class ConfigApi(object):
     api = Api(app, "/v1")
 
     # API ROUTE TOURNAMENTS
+    api.add_resource(Tournaments, '/tournaments/matchs')
     api.add_resource(TournamentsNext, '/tournaments/next')
     api.add_resource(TournamentsAtp, '/tournaments/atp')
     api.add_resource(TournamentsWta, '/tournaments/wta')

@@ -33,3 +33,10 @@ class TournamentModel:
             data.append(x)
 
         return data
+
+    def get_tournaments_with_match(self):
+
+        query = [{"$lookup": {"from": "tournaments", "localField": "_id", "foreignField": "_id", "as": "matches"}}]
+        r = self.tournaments.aggregate(pipeline=query)
+        print(r)
+        return r
