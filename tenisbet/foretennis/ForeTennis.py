@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import re
+from datetime import date, datetime
 
 from tenisbet.db.Model import MatchModel
 from tenisbet.db.Model.TournamentModel import TournamentModel
@@ -16,6 +17,7 @@ class ForeTennis:
         self.start = False
         self.tournaments = []
         self.matches = []
+        self.current_date = date.today()
 
     def get_tournaments(self):
 
@@ -30,11 +32,18 @@ class ForeTennis:
                 if self.start is False:
                     self.start = True
                     continue
-                date = tr.select_one("td:nth-child(1)").text
+
+                ended = 0
+                string_date = tr.select_one("td:nth-child(1)").text
                 link = tr.select_one("td:nth-child(2)").find("a")["href"]
                 name = tr.select_one("td:nth-child(2)").find("a").text
+                start_date = datetime.strptime(string_date.replace('/', '-'), '%Y-%m-%d').date()
 
-                data = {"start_date": date.replace('/', '-'), "category": tournament, "link": link, "tournament": name}
+                if start_date < self.current_date:
+                    ended = 1
+
+                data = {"start_date": start_date, "category": tournament, "link": link, "tournament": name,
+                        "ended": ended}
                 self.tournaments.append(data)
             self.start = False
 
