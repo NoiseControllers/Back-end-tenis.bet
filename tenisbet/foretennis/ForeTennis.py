@@ -18,6 +18,8 @@ class ForeTennis:
         self.tournaments = []
         self.matches = []
         self.current_date = date.today()
+        self.match_model = MatchModel.MatchModel()
+        self.rounds = ["R128", "R64", "R32", "R16", "QF", "SF", "FINAL"]
 
     def get_tournaments(self):
 
@@ -40,9 +42,9 @@ class ForeTennis:
                 start_date = datetime.strptime(string_date.replace('/', '-'), '%Y-%m-%d').date()
 
                 if start_date < self.current_date:
-                    ended = 1
+                    ended = 2
 
-                data = {"start_date": start_date, "category": tournament, "link": link, "tournament": name,
+                data = {"start_date": str(start_date), "category": tournament, "link": link, "tournament": name,
                         "ended": ended}
                 self.tournaments.append(data)
             self.start = False
@@ -54,11 +56,13 @@ class ForeTennis:
     def get_id_match(url_match):
         return re.findall(r"(?!.*/).+", url_match)[0]
 
-    def get_matches(self, url_tournament):
+    def get_matches(self, url_tournament, tournament_id):
         r = requests.get(url_tournament)
         dom = BeautifulSoup(r.content, "lxml")
 
         table = dom.find("table", {"class": "preds"}).find_all("tr")
+
+        matches_id = self.match_model.get_match_id(tournament_id)
 
         for tr in table:
             if self.start is False:
@@ -71,17 +75,23 @@ class ForeTennis:
                 match_id = self.get_id_match(match_url)
                 p1 = tr.select_one("td:nth-child(2) > b > a > span:nth-child(1)").text
                 p2 = tr.select_one("td:nth-child(2) > b > a > span:nth-child(3)").text
+                prob = tr.select_one("td:nth-of-type(3)").text.strip() + "% - " + tr.select_one("td:nth-of-type(4)").text.strip() + "%"
+                pred_set = tr.select_one("td:nth-of-type(6)").find_all("div")[0].text.strip() + " - " \
+                           + tr.select_one("td:nth-of-type(6)").find_all("div")[1].text.strip()
                 tip = tr.select_one("td:nth-child(5)").text.strip()
             except AttributeError:
                 continue
+            except IndexError:
+                continue
+            data = {"tournament_id": tournament_id, "match_id": match_id, "match_round": match_round,
+                    "match_Date": match_date, "player1": p1, "player2": p2, "tip": tip, "match_url": match_url,
+                    "prob": prob, "pred_set": pred_set, "match_result": "None"}
 
-            data = {"tournament_id": "", "match_id": match_id, "match_round": match_round, "match_Date": match_date,
-                    "player1": p1, "player2": p2, "tip": tip, "match_url": match_url, "match_result": ""}
-            self.matches.append(data)
+            if match_id not in matches_id and match_round in self.rounds:
+                self.matches.append(data)
 
         if len(self.matches) > 0:
-            match_model = MatchModel.MatchModel()
-            match_model.inserts(self.matches)
+            self.match_model.inserts(self.matches)
 
     @staticmethod
     def get_result_match(match_url, tip):
@@ -89,16 +99,18 @@ class ForeTennis:
         dom = BeautifulSoup(r.content, "lxml")
 
         match_result = dom.select("td.centered.predict, span.predict_y, span.predict_n")
+        match_round = dom.select("td.centered.tround")[0].text
+
         try:
             if match_result[1]["class"][0] == "predict_y":
                 if tip == int(match_result[0].text.strip()):
-                    return "WIN"
-                return "LOSS"
+                    return "WIN", match_round
+                return "LOSS", match_round
             elif match_result[1]["class"][0] == "predict_n":
                 if tip == int(match_result[0].text.strip()):
-                    return "LOSS"
-                return "WIN"
+                    return "LOSS", match_round
+                return "WIN", match_round
             else:
-                return "IN PROGRESS"
+                return "IN PROGRESS", match_round
         except IndexError:
-            return "IN PROGRESS"
+            return "IN PROGRESS", match_round
