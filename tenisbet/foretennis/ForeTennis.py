@@ -37,14 +37,14 @@ class ForeTennis:
 
                 ended = 0
                 string_date = tr.select_one("td:nth-child(1)").text
-                link = tr.select_one("td:nth-child(2)").find("a")["href"]
-                name = tr.select_one("td:nth-child(2)").find("a").text
+                link = tr.select_one("td:nth-of-type(2)").find("a")["href"]
+                name = tr.select_one("td:nth-of-type(2)").find("a").text
                 start_date = datetime.strptime(string_date.replace('/', '-'), '%Y-%m-%d').date()
 
                 if start_date < self.current_date:
                     ended = 2
 
-                data = {"start_date": str(start_date), "category": tournament, "link": link, "tournament": name,
+                data = {"start_date": str(start_date), "category": tournament, "link": link, "name": name,
                         "ended": ended}
                 self.tournaments.append(data)
             self.start = False
@@ -73,12 +73,12 @@ class ForeTennis:
                 match_date = tr.find("div", class_="date_match").text
                 match_url = tr.find("td", class_="lefted pnames").find("a")['href']
                 match_id = self.get_id_match(match_url)
-                p1 = tr.select_one("td:nth-child(2) > b > a > span:nth-child(1)").text
-                p2 = tr.select_one("td:nth-child(2) > b > a > span:nth-child(3)").text
+                p1 = tr.select_one("td:nth-of-type(2) > b > a > span:nth-of-type(1)").text
+                p2 = tr.select_one("td:nth-of-type(2) > b > a > span:nth-of-type(2)").text
                 prob = tr.select_one("td:nth-of-type(3)").text.strip() + "% - " + tr.select_one("td:nth-of-type(4)").text.strip() + "%"
                 pred_set = tr.select_one("td:nth-of-type(6)").find_all("div")[0].text.strip() + " - " \
                            + tr.select_one("td:nth-of-type(6)").find_all("div")[1].text.strip()
-                tip = tr.select_one("td:nth-child(5)").text.strip()
+                tip = tr.select_one("td:nth-of-type(5)").text.strip()
             except AttributeError:
                 continue
             except IndexError:

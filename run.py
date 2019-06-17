@@ -1,34 +1,34 @@
-from tenisbet.db.Model import MatchModel
-from tenisbet.db.Model.TournamentModel import TournamentModel
 from tenisbet.foretennis.ForeTennis import ForeTennis
+from tenisbet.tenniscom.Ranking import Ranking
 from tenisbet.utils.cron import _search_news_matches, _update_match, _tournaments_that_start
+import argparse
 
 
 def main():
-    run = ForeTennis()
-    # run.get_tournaments()
-    run.get_matches("https://www.foretennis.com/tournament/atp/rolandgarros/2019", None)
-    # result_win = run.get_result_match("https://www.foretennis.com/matches/atp/auger-paire/160217", 1)
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--searchMatches', action='store_true')
+    parser.add_argument('--searchTournament', action='store_true')
+    parser.add_argument('--tournamentActive', action='store_true')
+    parser.add_argument('--updateResultMatch', action='store_true')
+    parser.add_argument('--rankings', action='store_true')
+    args = parser.parse_args()
 
-    # match_model = MatchModel.MatchModel()
-    # r = match_model.get_match_id()
-    #
-    # for x in r:
-    #     print(x)
-    #     if x['match_id'] in '1602414':
-    #         print("ENCONTRADO")
-    #         return
+    if args.searchMatches:
+        _search_news_matches()
 
-    # tournament_model = TournamentModel()
-    #
-    # tournament_model.upcoming_tournaments()
+    elif args.searchTournament:
+        run = ForeTennis()
+        run.get_tournaments()
 
-    # _update_match()
-    # _search_news_matches()
-    # _update_match()
-    _tournaments_that_start()
+    elif args.tournamentActive:
+        _tournaments_that_start()
 
-    # matches_id = match_model.get_match_id("5cfbcb873db9d040090e6e30")
+    elif args.updateResultMatch:
+        _update_match()
+
+    elif args.rankings:
+        run = Ranking()
+        run.execute()
 
 
 if __name__ == '__main__':
