@@ -47,7 +47,7 @@ class TournamentModel:
             matches = self.match_model.get_matches_by_tournament_id(tournament['_id'])
             for match in matches:
                 x.append(match)
-            t = {"id": tournament['_id'], "category": tournament['category'], "name": tournament['tournament'],
+            t = {"id": tournament['_id'], "category": tournament['category'], "name": tournament['name'],
                  "start_date": tournament['start_date'], "matches": x}
             result.append(t)
 

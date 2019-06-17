@@ -8,7 +8,7 @@ tournament_model = TournamentModel()
 class Tournaments(Resource):
     def get(self):
         r = tournament_model.get_tournaments_with_match()
-        return dumps(r)
+        return r, 200
 
 
 class TournamentsCurrent(Resource):

@@ -34,8 +34,6 @@ def _tournaments_that_start():
 
 def _search_news_matches():
     tournaments = tournament_model.get_tournaments_by_ended(1)
-    print(tournaments)
 
     for tournament in tournaments:
-        print(tournament)
         run.get_matches(tournament['link'], tournament['_id'])
