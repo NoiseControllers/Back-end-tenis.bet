@@ -38,3 +38,9 @@ class TournamentsWta(Resource):
     def get(self):
         r = tournament_model.get_tournaments_by_type('wta')
         return r
+
+
+class TournamentSearch(Resource):
+    def get(self, category, name, year):
+        r = tournament_model.search_mathes_by_tournament(category, name, year)
+        return r, 200

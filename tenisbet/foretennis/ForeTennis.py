@@ -40,12 +40,12 @@ class ForeTennis:
                 link = tr.select_one("td:nth-of-type(2)").find("a")["href"]
                 name = tr.select_one("td:nth-of-type(2)").find("a").text
                 start_date = datetime.strptime(string_date.replace('/', '-'), '%Y-%m-%d').date()
-
+                pattern = name.lower().replace(" ", "")
                 if start_date < self.current_date:
                     ended = 2
 
                 data = {"start_date": str(start_date), "category": tournament, "link": link, "name": name,
-                        "ended": ended}
+                        "pattern": pattern, "ended": ended}
                 self.tournaments.append(data)
             self.start = False
 
