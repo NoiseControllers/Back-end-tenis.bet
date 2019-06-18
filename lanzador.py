@@ -20,4 +20,4 @@ api.add_resource(TournamentSearch, '/tournament/<string:category>/<string:name>/
 # API RANKINGS
 api.add_resource(Rankings, '/rankings')
 
-app.run(debug=True)
+# app.run(debug=True)
