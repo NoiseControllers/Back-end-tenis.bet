@@ -38,5 +38,6 @@ class MatchModel:
         return x.modified_count
 
     def get_matches_by_tournament_id(self, tournament_id):
-        r = self.db.matches.find({"tournament_id": tournament_id}, {"_id": 0}).limit(5)
+
+        r = self.db.matches.find({"tournament_id": tournament_id}, {"_id": 0}).sort([("match_id", -1)]).limit(5)
         return r
