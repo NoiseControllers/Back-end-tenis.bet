@@ -13,7 +13,10 @@ def _update_match():
     matches = match_model.get_matches_not_started()
 
     for match in matches:
-        result, match_round = run.get_result_match(match['match_url'], match['tip'])
+        try:
+            result, match_round = run.get_result_match(match['match_url'], match['tip'])
+        except TypeError:
+            continue
 
         if match_round == "FINAL" and result == "WIN" or match_round == "FINAL" and result == "LOSS":
             tournament_model.set_ended(match["tournament_id"], 2)
