@@ -98,8 +98,12 @@ class ForeTennis:
         r = requests.get(match_url)
         dom = BeautifulSoup(r.content, "lxml")
 
-        match_result = dom.select("td.centered.predict, span.predict_y, span.predict_n")
-        match_round = dom.select("td.centered.tround")[0].text
+        try:
+            match_result = dom.select("td.centered.predict, span.predict_y, span.predict_n")
+            match_round = dom.select("td.centered.tround")[0].text
+        except IndexError:
+            print(f"[DEBUG][IndexError] {match_url} ")
+            pass
 
         try:
             if match_result[1]["class"][0] == "predict_y":
