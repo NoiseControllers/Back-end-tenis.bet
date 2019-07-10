@@ -102,7 +102,7 @@ class ForeTennis:
             match_result = dom.select("td.centered.predict, span.predict_y, span.predict_n")
             match_round = dom.select("td.centered.tround")[0].text
         except IndexError:
-            print(f'[DEBUG][IndexError] {match_url}')
+            print("[DEBUG][IndexError] " + str(match_url))
             pass
 
         try:
