@@ -1,12 +1,12 @@
 from datetime import date
 import requests
 from bs4 import BeautifulSoup
-from tenisbet.db.Model import RankingModel
+from tenisbet.db.data import RankingRepository
 
 
 class Ranking:
     def __init__(self):
-        self.ranking_model = RankingModel.RankingModel()
+        self.ranking_model = RankingRepository.RankingModel()
         self.list_ranking = {"ATP": "http://www.tennis.com/rankings/ATP/", "WTA": "http://www.tennis.com/rankings/WTA/"}
         self.current_date = date.today()
         self.ranking_atp = []

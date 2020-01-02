@@ -1,5 +1,5 @@
 from flask_restful import Resource
-from tenisbet.db.Model.RankingModel import RankingModel
+from tenisbet.db.data.RankingRepository import RankingModel
 ranking_model = RankingModel()
 
 

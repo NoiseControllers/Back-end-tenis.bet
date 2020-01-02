@@ -1,7 +1,7 @@
 from datetime import datetime, date
 
-from tenisbet.db.Model.MatchModel import MatchModel
-from tenisbet.db.Model.TournamentModel import TournamentModel
+from tenisbet.db.data.MatchRepository import MatchModel
+from tenisbet.db.data.TournamentRepository import TournamentModel
 from tenisbet.foretennis.ForeTennis import ForeTennis
 
 match_model = MatchModel()

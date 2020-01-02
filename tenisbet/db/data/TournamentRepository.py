@@ -3,7 +3,7 @@ import json
 from bson import ObjectId
 from bson.json_util import dumps
 
-from tenisbet.db.Model import MatchModel
+from tenisbet.db.data import MatchRepository
 from tenisbet.db.MongoDB import MongoDB
 from datetime import date, timedelta
 
@@ -12,7 +12,7 @@ class TournamentModel:
     def __init__(self):
         self.db = MongoDB.db
         self.tournaments = self.db.tournaments
-        self.match_model = MatchModel.MatchModel()
+        self.match_model = MatchRepository.MatchModel()
 
     def inserts(self, tournaments):
         self.tournaments.insert_many(tournaments)

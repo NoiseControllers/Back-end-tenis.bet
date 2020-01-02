@@ -3,8 +3,8 @@ from bs4 import BeautifulSoup
 import re
 from datetime import date, datetime
 
-from tenisbet.db.Model import MatchModel
-from tenisbet.db.Model.TournamentModel import TournamentModel
+from tenisbet.db.data import MatchRepository
+from tenisbet.db.data.TournamentRepository import TournamentModel
 
 
 class ForeTennis:
@@ -18,7 +18,7 @@ class ForeTennis:
         self.tournaments = []
         self.matches = []
         self.current_date = date.today()
-        self.match_model = MatchModel.MatchModel()
+        self.match_model = MatchRepository.MatchModel()
         self.rounds = ["R128", "R64", "R32", "R16", "QF", "SF", "FINAL"]
 
     def get_tournaments(self):
