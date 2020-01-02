@@ -8,11 +8,11 @@ from tenisbet.db.MongoDB import MongoDB
 from datetime import date, timedelta
 
 
-class TournamentModel:
+class TournamentRepository:
     def __init__(self):
         self.db = MongoDB.db
         self.tournaments = self.db.tournaments
-        self.match_model = MatchRepository.MatchModel()
+        self.match_model = MatchRepository.MatchRepository()
 
     def inserts(self, tournaments):
         self.tournaments.insert_many(tournaments)

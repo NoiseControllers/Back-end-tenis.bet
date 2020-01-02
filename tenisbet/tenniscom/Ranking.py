@@ -6,7 +6,7 @@ from tenisbet.db.data import RankingRepository
 
 class Ranking:
     def __init__(self):
-        self.ranking_model = RankingRepository.RankingModel()
+        self.ranking_model = RankingRepository.RankingRepository()
         self.list_ranking = {"ATP": "http://www.tennis.com/rankings/ATP/", "WTA": "http://www.tennis.com/rankings/WTA/"}
         self.current_date = date.today()
         self.ranking_atp = []

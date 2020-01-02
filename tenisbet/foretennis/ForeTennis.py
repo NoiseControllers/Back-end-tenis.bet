@@ -4,7 +4,7 @@ import re
 from datetime import date, datetime
 
 from tenisbet.db.data import MatchRepository
-from tenisbet.db.data.TournamentRepository import TournamentModel
+from tenisbet.db.data.TournamentRepository import TournamentRepository
 
 
 class ForeTennis:
@@ -18,7 +18,7 @@ class ForeTennis:
         self.tournaments = []
         self.matches = []
         self.current_date = date.today()
-        self.match_model = MatchRepository.MatchModel()
+        self.match_model = MatchRepository.MatchRepository()
         self.rounds = ["R128", "R64", "R32", "R16", "QF", "SF", "FINAL"]
 
     def get_tournaments(self):
@@ -49,7 +49,7 @@ class ForeTennis:
                 self.tournaments.append(data)
             self.start = False
 
-        tournament_model = TournamentModel()
+        tournament_model = TournamentRepository()
         tournament_model.inserts(self.tournaments)
 
     @staticmethod

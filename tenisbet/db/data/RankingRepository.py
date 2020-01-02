@@ -1,7 +1,7 @@
 from tenisbet.db.MongoDB import MongoDB
 
 
-class RankingModel:
+class RankingRepository:
     def __init__(self):
         self.db = MongoDB.db
         self.ranking = self.db.rankings

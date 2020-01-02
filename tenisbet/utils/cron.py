@@ -1,11 +1,11 @@
 from datetime import datetime, date
 
-from tenisbet.db.data.MatchRepository import MatchModel
-from tenisbet.db.data.TournamentRepository import TournamentModel
+from tenisbet.db.data.MatchRepository import MatchRepository
+from tenisbet.db.data.TournamentRepository import TournamentRepository
 from tenisbet.foretennis.ForeTennis import ForeTennis
 
-match_model = MatchModel()
-tournament_model = TournamentModel()
+match_model = MatchRepository()
+tournament_model = TournamentRepository()
 run = ForeTennis()
 
 

@@ -3,7 +3,7 @@ from bson import ObjectId
 from tenisbet.db.MongoDB import MongoDB
 
 
-class MatchModel:
+class MatchRepository:
     def __init__(self):
         self.db = MongoDB.db
         self.matches = self.db.matches

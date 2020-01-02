@@ -1,6 +1,6 @@
 from flask_restful import Resource
-from tenisbet.db.data.RankingRepository import RankingModel
-ranking_model = RankingModel()
+from tenisbet.db.data.RankingRepository import RankingRepository
+ranking_model = RankingRepository()
 
 
 class Rankings(Resource):

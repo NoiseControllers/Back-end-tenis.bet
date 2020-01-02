@@ -1,8 +1,8 @@
 from flask_restful import Resource
 
-from tenisbet.db.data.TournamentRepository import TournamentModel
+from tenisbet.db.data.TournamentRepository import TournamentRepository
 from bson.json_util import dumps
-tournament_model = TournamentModel()
+tournament_model = TournamentRepository()
 
 
 class Tournaments(Resource):
